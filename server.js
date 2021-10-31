@@ -6,27 +6,30 @@ const port = process.env.PORT || 3000
 require('dotenv').config()
 const { auth, requiresAuth } = require('express-openid-connect');
 
+
+app.use('/', express.static('welcome'))
+
 app.use(
   auth({
     auth0Logout: true,
     issuerBaseURL: process.env.ISSUER_BASE_URL,
     baseURL: process.env.BASE_URL,
     clientID: process.env.CLIENT_ID,
-    secret: process.env.SECRET,
-    idpLogout: true,
+    secret: process.env.SECRET
   })
 );
 
-app.use('/', express.static('static'))
+
+
 
 ;(async () => {
-
+    app.use('/setup', requiresAuth(), express.static('botStatic'))
     app.get('/profile', requiresAuth(), (req, res) => {
 
         res.send(req.oidc.user)
     })
 
-    app.get('/bot/user/:userID/:userPass/*', async (request, response) => {
+    app.get('/bot/user/:userID/:userPass/*', requiresAuth(), async (request, response) => {
         const username = request.params.userID
         const pass = request.params.userPass
         const url = request.params[0]
