@@ -86,9 +86,10 @@
                 <input type="text" v-model='url' placeholder="Enter the URL" required>
                 <input type='email' v-model='user' placeholder="Enter Username" required>
                 <input type='password' v-model='pass' placeholder="Enter Password" required>
-                <button @click='test(user, pass, url)'>Testing</button>
+                <button @click='getToken(token, user, pass, url)'>Testing</button>
             </div>
         </div>
         <script src="app.js" async defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
     </body>
 </html>

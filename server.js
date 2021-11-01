@@ -4,45 +4,65 @@ const express = require('express')
 const app = express()
 const port = process.env.PORT || 3000
 require('dotenv').config()
-const { auth, requiresAuth } = require('express-openid-connect');
-
+const { auth, requiresAuth, claimEquals } = require('express-openid-connect');
+const jwt = require('express-jwt');
+const jwks = require('jwks-rsa');
+const jwtAuthz = require('express-jwt-authz')
+const JwksRsa = require('jwks-rsa')
+const checkUseBot = jwtAuthz(['Use:bot'], {customScopeKey:'permissions'})
+const authToken = jwt({
+    secret: JwksRsa.expressJwtSecret({
+        cache: true,
+        rateLimit: true,
+        jwksRequestsPerMinute: 5,
+        jwksUri: process.env.ISSUER_BASE_URL + ".well-known/jwks.json",
+    }),
+    audience: process.env.AUD,
+    issuer: process.env.ISSUER_BASE_URL,
+    algorithms: ['RS256']
+});
 
 app.use('/', express.static('welcome'))
 
-app.use(
-  auth({
-    auth0Logout: true,
-    issuerBaseURL: process.env.ISSUER_BASE_URL,
-    baseURL: process.env.BASE_URL,
-    clientID: process.env.CLIENT_ID,
-    secret: process.env.SECRET
-  })
-);
 
 
 
 
 ;(async () => {
+    app.use(
+        auth({
+          authorizationParams: {
+              response_type: 'code',
+              audience: process.env.AUD,
+              scope: 'openid profile email',
+            },
+          auth0Logout: true,
+          issuerBaseURL: process.env.ISSUER_BASE_URL,
+          baseURL: process.env.BASE_URL,
+          clientID: process.env.CLIENT_ID,
+          secret: process.env.SECRET,
+          clientSecret: process.env.CLIENT_SECRET
+        })
+      );
     app.use('/setup', requiresAuth(), express.static('botStatic'))
-    app.get('/profile', requiresAuth(), (req, res) => {
-
-        res.send(req.oidc.user)
+    app.get('/profile/ID', requiresAuth(), (req, res) => {
+        let { access_token } = req.oidc.accessToken;
+        res.send(access_token)
     })
+    app.get('/profile/info', requiresAuth(), (req,res) => {
+        res.send(req.oidc.idTokenClaims)
+    })
+    app.use('/profile', requiresAuth(), express.static('profileStatic'))
+ 
+    
+    
 
-    app.get('/bot/user/:userID/:userPass/*', requiresAuth(), async (request, response) => {
+    app.get('/bot/user/:userID/:userPass/*', authToken, checkUseBot, async (request, response) => {
         const username = request.params.userID
         const pass = request.params.userPass
         const url = request.params[0]
         const content = await bot (username, pass, url)
-        response.set({
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Credentials': true,
-            'Access-Control-Allow-Methods': 'GET',
-            'Access-Control-Allow-Headers': 'Content-Type',
-            'Content-Type': 'text/plain'
-        })
-
-        response.send(content)
+        response.send("success")
     })
 
     app.listen(port, () => {
@@ -77,9 +97,7 @@ app.use(
             await bot (username, pass, url)
         }
         
-        return `{
-            "test" : "hookers"
-        }`
+        return
         
         
     
