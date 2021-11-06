@@ -82,10 +82,10 @@ app.use('/', express.static('welcome'))
 
     // puppeteer bot logic
     const bot = async (username, pass, url) => {
-            const browser = await puppeteer.launch({ headless: false})
+            const browser = await puppeteer.launch({})
             const page = await browser.newPage()
-            var status = ''
-            await page.setViewport({ width: 1250, height: 1300 })
+            const complete = ''
+            await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36')
             
             //the Url of the card you want the bot to buy
             await page.goto(url, {timeout: 20000})
@@ -102,6 +102,7 @@ app.use('/', express.static('welcome'))
                     await page.type('#fld-p1', pass)
                     await page.click('.cia-form__controls ')
                     await page.waitForSelector('.payment__order-summary')
+                    complete = 'Your order has been placed'
                 }
                 catch(e) {
                     try {
@@ -117,6 +118,7 @@ app.use('/', express.static('welcome'))
                                 await page.type('#fld-p1', pass) 
                                 await page.click('.cia-form__controls ')
                                 await page.waitForSelector('.payment__order-summary')
+                                complete = 'Your order has been placed'
                             }
                           },7500)
 
@@ -135,7 +137,7 @@ app.use('/', express.static('welcome'))
             await bot (username, pass, url)
         }
         
-        return('complete')
+        return(complete + ' this is a test')
         
         
     
