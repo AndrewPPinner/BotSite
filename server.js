@@ -92,13 +92,14 @@ app.use('/', express.static('welcome'))
             //the Url of the card you want the bot to buy
             await page.goto(url, {timeout: 20000, waitUntil: 'domcontentloaded'})
             try {
-                await page.waitForSelector('#cart', {timeout: 60000})
+                await page.waitForSelector('#cart', {timeout: 7500})
                 await page.click("#cart", {clickCount: 4})
                 try {
                     await page.waitForSelector('.success', {timeout: 10000})
-                    await page.goto('https://www.bestbuy.com/cart')
                     await page.screenshot({path: 'example.png'})
+                    await page.goto('https://www.bestbuy.com/cart')
                     await page.waitForSelector('button[data-track="Checkout - Top"]')
+                    await page.screenshot({path: 'example.png'})
                     await page.click('button[data-track="Checkout - Top"]', {clickCount: 4})
                     await page.waitForSelector("#fld-e")
                     await page.type("#fld-e", username) 
@@ -109,6 +110,7 @@ app.use('/', express.static('welcome'))
                 }
                 catch(e) {
                     try {
+                        await page.screenshot({path: 'example.png'})
                         await page.waitForSelector('#gated-purchase-please-wait-button', {timeout: 5500})
                         await page.screenshot({path: 'example.png'})
                         const value = await page.$eval('button[disabled]', el => getComputedStyle(el).getPropertyValue('cursor'))

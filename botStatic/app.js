@@ -14,7 +14,7 @@ const app = Vue.createApp({
                     url: 'https://quickbots.herokuapp.com/bot/user/' + user + "/" + pass + "/" + url,
                     headers: { "authorization": "Bearer " + token}    
                 })
-            .then(response => (console.log(response), this.show = true))
+            .then(response => (console.log(response)))
             .catch(e => (console.log(e)))
         },
         getToken(token, user, pass, url) {
@@ -22,6 +22,7 @@ const app = Vue.createApp({
             //https://quickbots.herokuapp.com/profile/ID
             .get("https://quickbots.herokuapp.com/profile/ID")
             .then(response => {
+                this.show = true
                 const token = response.data
                 this.test(user, pass, url, token)
             })
