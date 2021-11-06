@@ -3,7 +3,8 @@ const app = Vue.createApp({
         return {
             user: null,
             pass: null,
-            url: null
+            url: null,
+            show: false
         }
     },
     methods: {
@@ -12,7 +13,7 @@ const app = Vue.createApp({
                     url: 'https://quickbots.herokuapp.com/bot/user/' + user + "/" + pass + "/" + url,
                     headers: { "authorization": "Bearer " + token}    
                 })
-            .then(response => (console.log(response)))
+            .then(response => (console.log(response), this.show = true))
             .catch(e => (console.log(e)))
         },
         getToken(token, user, pass, url) {
