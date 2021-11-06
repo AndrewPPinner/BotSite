@@ -82,7 +82,7 @@ app.use('/', express.static('welcome'))
 
     // puppeteer bot logic
     const bot = async (username, pass, url) => {
-            const browser = await puppeteer.launch({ headless: false, executablePath: "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe" })
+            const browser = await puppeteer.launch({ headless: false})
             const page = await browser.newPage()
             var status = ''
             await page.setViewport({ width: 1250, height: 1300 })
