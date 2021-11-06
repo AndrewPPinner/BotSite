@@ -82,7 +82,7 @@ app.use('/', express.static('welcome'))
 
     // puppeteer bot logic
     const bot = async (username, pass, url) => {
-            const browser = await puppeteer.launch({})
+            const browser = await puppeteer.launch({args: ['--no-sandbox'] })
             const page = await browser.newPage()
             const complete = ''
             await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36')
