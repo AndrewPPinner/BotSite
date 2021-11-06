@@ -9,9 +9,9 @@ const app = Vue.createApp({
     },
     mounted() {
         axios
-        .get("http://localhost:3000/profile/info")
+        .get("http://localhost:3000/loggedin")
         .then(res => (console.log(res), this.loggedIn = true))
-        .catch(e => (console.log(e), this.loggedIn = false))
+        .catch(e => (this.loggedIn = false))
     }
     
 })

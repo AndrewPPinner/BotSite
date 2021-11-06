@@ -23,21 +23,33 @@
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                      <li><a class="dropdown-item" href="http://localhpst:3000/about">About</a></li>
-                      <li v-if='loggedIn = false'><a class="dropdown-item" href="http://localhpst:3000/login">Login/Sign Up</a></li>
-                      <li><a class="dropdown-item" href="http://localhpst:3000/pricing">Pricing</a></li>
-                      <li v-if='loggedIn = true'><a class="dropdown-item" href="http://localhpst:3000/profile">Profile</a></li>
-                       <li v-if='loggedIn = true'><a class="dropdown-item" href="http://localhpst:3000/setup">Bot Setup</a></li>
-                      <li v-if='loggedIn = true'><a class="dropdown-item" href="http://localhpst:3000/guide">Quick Guide</a></li>
-                      <li v-if='loggedIn = true'><a class="dropdown-item" href="http://localhpst:3000/settings">Settings</a></li>
+                      <li><a class="dropdown-item" href="#about">About</a></li>
+                      <li v-if='loggedIn != true'><a class="dropdown-item" href="http://localhost:3000/login">Login/Sign Up</a></li>
+                      <li><a class="dropdown-item" href="#pricing">Pricing</a></li>
+                      <li v-if='loggedIn'><a class="dropdown-item" href="http://localhost:3000/profile">Profile</a></li>
+                      <li v-if='loggedIn'><a class="dropdown-item" href="http://localhost:3000/setup">Bot Setup</a></li>
+                      <li v-if='loggedIn'><a class="dropdown-item" href="http://localhost:3000/guide">Quick Guide</a></li>
+                      <li v-if='loggedIn'><a class="dropdown-item" href="http://localhost:3000/settings">Settings</a></li>
                     </ul>
                   </li>
                 </ul>
               </div>
             </div>
           </nav>
-        <h2>Welcome Page</h2>
-        <p>BOILER PLATE BOILER PLATEBOILER PLATEBOILER PLATEBOILER PLATEBOILER PLATE BOILER PLATE</p>
+        <h2>Welcome</h2>
+        <p>Hello and thank you for taking the time to visit the site. Below you will find details about who we are, why we exist, and what you can expect from us.</p>
+        <div>
+      <div id='about'>
+        <h2>About</h2>
+        <p>As I am sure you are aware, the current market for electronics has been driven to madness due to recent events. Anywhere from lack of any availbility to the only availble products are priced outrageously by those who are lucky enough to score them early. Our goal as a company is to help supply the people who aren't able to get their hands
+          on products early without driving the prices higher. Many people are currently leaning on automated services to even get a chance at getting the products they want for a fair an reasonable price.
+          The downside of many of these companies is they charge their fee before you get access to their software as well as without the guarentee of any results. So we look to change that. We offer a "Per Purchase" pay structure that always users to try our services without paying up front. This way if we fail to provide the product you are trying for you pay nothing.
+          The way we do this is by charging a percent fee added after the purchase of your item.
+        </p>
+      </div>
+      <div id="pricing">
+        <h2>Pricing</h2>
+      </div>
     </div>
     <script src="app.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
