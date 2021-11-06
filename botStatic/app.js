@@ -9,8 +9,9 @@ const app = Vue.createApp({
     },
     methods: {
         test(user, pass, url, token) {
+            //https://quickbots.herokuapp.com/
             axios({method: 'get',
-                    url: 'https://quickbots.herokuapp.com/bot/user/' + user + "/" + pass + "/" + url,
+                    url: 'http://localhost:3000/bot/user/' + user + "/" + pass + "/" + url,
                     headers: { "authorization": "Bearer " + token}    
                 })
             .then(response => (console.log(response), this.show = true))
@@ -18,7 +19,8 @@ const app = Vue.createApp({
         },
         getToken(token, user, pass, url) {
             axios
-            .get("https://quickbots.herokuapp.com/profile/ID")
+            //https://quickbots.herokuapp.com/profile/ID
+            .get("http://localhost:3000/profile/ID")
             .then(response => {
                 const token = response.data
                 this.test(user, pass, url, token)

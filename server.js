@@ -82,7 +82,7 @@ app.use('/', express.static('welcome'))
 
     // puppeteer bot logic
     const bot = async (username, pass, url) => {
-            const browser = await puppeteer.launch({args: ['--no-sandbox'] })
+            const browser = await puppeteer.launch({args: ['--no-sandbox'], headless: false })
             const page = await browser.newPage()
             const complete = ''
             await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36')
@@ -90,24 +90,25 @@ app.use('/', express.static('welcome'))
             //the Url of the card you want the bot to buy
             await page.goto(url, {timeout: 20000})
             try {
-                await page.waitForSelector('#cart', {timeout: 5200})
+                await page.waitForSelector('#cart', {timeout: 7500})
                 await page.click("#cart", {clickCount: 4})
-                await page.screenshot({path: 'example.png'})
                 try {
-                    await page.waitForSelector('.success', {timeout: 5500})
+                    await page.waitForSelector('.success', {timeout: 10000})
                     await page.goto('https://www.bestbuy.com/cart')
+                    await page.screenshot({path: 'example.png'})
                     await page.waitForSelector('button[data-track="Checkout - Top"]')
                     await page.click('button[data-track="Checkout - Top"]', {clickCount: 4})
                     await page.waitForSelector("#fld-e")
                     await page.type("#fld-e", username) 
                     await page.type('#fld-p1', pass)
                     await page.click('.cia-form__controls ')
-                    await page.waitForSelector('.payment__order-summary')
-                    complete = 'Your order has been placed'
+                    await page.waitForSelector('button[data-track="Place your Order - Contact Card"]')
+                    await page.screenshot({path: 'example.png'})
                 }
                 catch(e) {
                     try {
                         await page.waitForSelector('#gated-purchase-please-wait-button', {timeout: 5500})
+                        await page.screenshot({path: 'example.png'})
                         const value = await page.$eval('button[disabled]', el => getComputedStyle(el).getPropertyValue('cursor'))
                         await setInterval( async function(){
                             if (value == "not-allowed") {
@@ -118,8 +119,8 @@ app.use('/', express.static('welcome'))
                                 await page.type("#fld-e", username)
                                 await page.type('#fld-p1', pass) 
                                 await page.click('.cia-form__controls ')
-                                await page.waitForSelector('.payment__order-summary')
-                                complete = 'Your order has been placed'
+                                await page.waitForSelector('button[data-track="Place your Order - Contact Card"]')
+                                await page.screenshot({path: 'example.png'})
                             }
                           },7500)
 
@@ -132,13 +133,14 @@ app.use('/', express.static('welcome'))
             }
                 //await page.click('.payment__order-summary')
             } catch(e) {
+            await page.screenshot({path: 'example.png'})
             console.log("there was an error")
             console.log(e)
             await browser.close()
             await bot (username, pass, url)
         }
         
-        return(complete + ' this is a test')
+        return(__filename + 'example.png')
         
         
     
