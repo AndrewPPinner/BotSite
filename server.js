@@ -92,7 +92,7 @@ app.use('/', express.static('welcome'))
             try {
                 await page.waitForSelector('#cart', {timeout: 5200})
                 await page.click("#cart", {clickCount: 4})
-                await page.screenshot({path: 'BotSite\botStatic\example.png'})
+                await page.screenshot({path: 'example.png'})
                 try {
                     await page.waitForSelector('.success', {timeout: 5500})
                     await page.goto('https://www.bestbuy.com/cart')
