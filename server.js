@@ -82,13 +82,13 @@ app.use('/', express.static('welcome'))
 
     // puppeteer bot logic
     const bot = async (username, pass, url) => {
-            const browser = await puppeteer.launch({args: ['--no-sandbox'], headless: false })
+            const browser = await puppeteer.launch({args: ['--no-sandbox', "--disable-setuid-sandbox"]})
             const page = await browser.newPage()
             const complete = ''
             await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36')
             
             //the Url of the card you want the bot to buy
-            await page.goto(url, {timeout: 20000})
+            await page.goto(url, {timeout: 20000, waitUntil: 'domcontentloaded'})
             try {
                 await page.waitForSelector('#cart', {timeout: 7500})
                 await page.click("#cart", {clickCount: 4})
