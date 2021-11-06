@@ -3,6 +3,7 @@ const fs = require('fs-extra')
 const express = require('express')
 const app = express()
 const port = process.env.PORT || 3000
+const userAgent = require('user-agents')
 require('dotenv').config()
 const { auth, requiresAuth, claimEquals } = require('express-openid-connect');
 const jwt = require('express-jwt');
@@ -72,6 +73,7 @@ app.use('/', express.static('welcome'))
         const username = request.params.userID
         const pass = request.params.userPass
         const url = request.params[0]
+        console.log(url + " " + username + " " + pass)
         const content = await bot (username, pass, url)
         response.send(content)
     })
@@ -85,12 +87,12 @@ app.use('/', express.static('welcome'))
             const browser = await puppeteer.launch({args: ['--no-sandbox', "--disable-setuid-sandbox"]})
             const page = await browser.newPage()
             const complete = ''
-            await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36')
+            await page.setUserAgent(userAgent.toString())
             
             //the Url of the card you want the bot to buy
             await page.goto(url, {timeout: 20000, waitUntil: 'domcontentloaded'})
             try {
-                await page.waitForSelector('#cart', {timeout: 7500})
+                await page.waitForSelector('#cart', {timeout: 60000})
                 await page.click("#cart", {clickCount: 4})
                 try {
                     await page.waitForSelector('.success', {timeout: 10000})
