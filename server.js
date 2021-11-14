@@ -79,7 +79,7 @@ app.use('/', express.static('welcome'))
     })
 
     app.listen(port, () => {
-        console.log(`Server listening on port https://quickbots.herokuapp.com/${port}`)
+        console.log(`Server listening on port http://173.89.66.162/${port}`)
     })
 
     // puppeteer bot logic

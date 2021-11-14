@@ -9,7 +9,7 @@ const app = Vue.createApp({
     },
     mounted() {
         axios
-        .get("https://quickbots.herokuapp.com/loggedin")
+        .get("http://173.89.66.162:3000/loggedin")
         .then(res => (console.log(res), this.loggedIn = true))
         .catch(e => (this.loggedIn = false))
     }
