@@ -16,10 +16,10 @@ const authToken = jwt({
         cache: true,
         rateLimit: true,
         jwksRequestsPerMinute: 5,
-        jwksUri: process.env.ISSUER_BASE_URL + ".well-known/jwks.json",
+        jwksUri: "https://dev-2zwfghb6.us.auth0.com/" + ".well-known/jwks.json",
     }),
-    audience: process.env.AUD,
-    issuer: process.env.ISSUER_BASE_URL,
+    audience: "https://test/api",
+    issuer: "https://dev-2zwfghb6.us.auth0.com/",
     algorithms: ['RS256']
 });
 
@@ -32,15 +32,15 @@ app.use('/', express.static('welcome'))
         auth({
           authorizationParams: {
               response_type: 'code',
-              audience: process.env.AUD,
+              audience: "https://test/api",
               scope: 'openid profile email',
             },
           auth0Logout: true,
-          issuerBaseURL: process.env.ISSUER_BASE_URL,
-          baseURL: process.env.BASE_URL,
-          clientID: process.env.CLIENT_ID,
-          secret: process.env.SECRET,
-          clientSecret: process.env.CLIENT_SECRET
+          issuerBaseURL: "https://dev-2zwfghb6.us.auth0.com/",
+          baseURL: "http://173.89.66.162:3000/",
+          clientID: "j80RvDBseJ3tlus9UR1B21EjYn6KnV9y",
+          secret: "feiTKHNEuXKjzvObtGOyccAICZOZKBHh",
+          clientSecret: "Ttr9gZjdkLOp8vNwDzikbdjVwpBnPvQKjq7YX_rnVMzPPl5XX4RzoJNhlQ-9ZhzQ"
         })
       );
 
