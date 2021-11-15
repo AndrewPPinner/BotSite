@@ -37,7 +37,7 @@ app.use('/', express.static('welcome'))
             },
           auth0Logout: true,
           issuerBaseURL: "https://dev-2zwfghb6.us.auth0.com/",
-          baseURL: "http://173.89.66.162:3000/",
+          baseURL: "http:/192.168.50.74:3000/",
           clientID: "j80RvDBseJ3tlus9UR1B21EjYn6KnV9y",
           secret: "feiTKHNEuXKjzvObtGOyccAICZOZKBHh",
           clientSecret: "Ttr9gZjdkLOp8vNwDzikbdjVwpBnPvQKjq7YX_rnVMzPPl5XX4RzoJNhlQ-9ZhzQ"
