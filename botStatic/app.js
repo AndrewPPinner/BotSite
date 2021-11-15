@@ -24,6 +24,7 @@ const app = Vue.createApp({
             .then(response => {
                 this.show = true
                 const token = response.data
+                console.log(token)
                 this.test(user, pass, url, token)
             })
             .catch(e =>(console.log(e)))
