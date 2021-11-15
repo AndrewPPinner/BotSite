@@ -84,7 +84,7 @@ app.use('/', express.static('welcome'))
 
     // puppeteer bot logic
     const bot = async (username, pass, url) => {
-            const browser = await puppeteer.launch({args: ['--no-sandbox', "--disable-setuid-sandbox"]})
+            const browser = await puppeteer.launch({args: ['--no-sandbox', "--disable-setuid-sandbox"], headless: false})
             const page = await browser.newPage()
             const complete = ''
             await page.setUserAgent(userAgent.toString())
