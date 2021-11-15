@@ -9,7 +9,7 @@ const app = Vue.createApp({
     },
     mounted() {
         axios
-        .get("http://173.89.66.162/loggedin")
+        .get("https://gpuforpeople.asuscomm.com/loggedin")
         .then(res => (console.log(res), this.loggedIn = true))
         .catch(e => (this.loggedIn = false))
     }
