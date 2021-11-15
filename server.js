@@ -16,7 +16,7 @@ const authToken = jwt({
         cache: true,
         rateLimit: true,
         jwksRequestsPerMinute: 5,
-        jwksUri: "dev-2zwfghb6.us.auth0.com.well-known/jwks.json",
+        jwksUri: "https://dev-2zwfghb6.us.auth0.com/.well-known/jwks.json",
     }),
     audience: "https://test/api",
     issuer: "https://dev-2zwfghb6.us.auth0.com/",
