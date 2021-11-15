@@ -4,7 +4,6 @@ const app = Vue.createApp({
             user: null,
             pass: null,
             url: null,
-            show: null
         }
     },
     methods: {
@@ -22,9 +21,7 @@ const app = Vue.createApp({
             //https://quickbots.herokuapp.com/profile/ID
             .get("https://gpuforpeople.asuscomm.com/profile/ID")
             .then(response => {
-                this.show = true
                 const token = response.data
-                console.log(token)
                 this.test(user, pass, url, token)
             })
             .catch(e =>(console.log(e)))
