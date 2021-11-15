@@ -37,7 +37,7 @@ app.use('/', express.static('welcome'))
             },
           auth0Logout: true,
           issuerBaseURL: "https://dev-2zwfghb6.us.auth0.com/",
-          baseURL: "http://173.89.66.162/",
+          baseURL: "https://gpuforpeople.asuscomm.com/",
           clientID: "j80RvDBseJ3tlus9UR1B21EjYn6KnV9y",
           secret: "feiTKHNEuXKjzvObtGOyccAICZOZKBHh",
           clientSecret: "Ttr9gZjdkLOp8vNwDzikbdjVwpBnPvQKjq7YX_rnVMzPPl5XX4RzoJNhlQ-9ZhzQ"
@@ -79,7 +79,7 @@ app.use('/', express.static('welcome'))
     })
 
     app.listen(port, () => {
-        console.log(`Server listening on http://173.89.66.162/`)
+        console.log(`Server listening on https://gpuforpeople.asuscomm.com/`)
     })
 
     // puppeteer bot logic
@@ -144,7 +144,7 @@ app.use('/', express.static('welcome'))
             await bot (username, pass, url)
         }
         
-        return(__filename + 'example.png')
+        return('good job')
         
         
     
