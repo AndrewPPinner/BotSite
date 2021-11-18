@@ -63,7 +63,7 @@ app.use('/', express.static('welcome'))
 
     //testing and should remove in the future
     app.get('/profile/info', requiresAuth(), (req, res) => {
-        res.send(req.oidc)        
+        res.send(req.oidc.idTokenClaims)        
     })
 
  
