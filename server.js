@@ -49,6 +49,7 @@ app.use('/', express.static('welcome'))
     app.use('/guide' , requiresAuth(), express.static('guide'))
     app.use('/settings', requiresAuth(), express.static('settings'))
     app.use('/setup', requiresAuth(), express.static('botStatic'))
+    app.use('/profile', requiresAuth(), express.static('profileStatic'))
 
     //check if the user is logged in to display useable endpoints
     app.get('/loggedin', (req, res) => {
@@ -62,11 +63,9 @@ app.use('/', express.static('welcome'))
 
     //testing and should remove in the future
     app.get('/profile/info', requiresAuth(), (req, res) => {
-        res.send(req.oidc.idTokenClaims)        
+        res.send(req.oidc)        
     })
 
-
-    app.use('/profile', requiresAuth(), express.static('profileStatic'))
  
     //calling puppeteer logic function passing information through the heading
     app.get('/bot/user/:userID/:userPass/*', authToken, checkUseBot, async (request, response) => {
