@@ -25,6 +25,7 @@ const authToken = jwt({
 
 // static welcome page no sign up required
 app.use('/', express.static('welcome'))
+app.use('/news', express.static('news'))
 
 
 ;(async () => {

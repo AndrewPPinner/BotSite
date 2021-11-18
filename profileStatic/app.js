@@ -12,7 +12,6 @@ const app = Vue.createApp({
         url: 'https://gpuforpeople.asuscomm.com/profile/info'  
     })
         .then(response => {
-            console.log(response)//for test purpose delete after testing
             this.username = response.data.nickname
             this.profilePicture = "https://avatars.dicebear.com/api/bottts/" + response.data.nickname + ".svg"
         })

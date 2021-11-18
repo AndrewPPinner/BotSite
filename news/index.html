@@ -14,20 +14,25 @@
         <div id="app">
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
                 <div class="container-fluid">
-                  <a class="navbar-brand" href="https://gpuforpeople.asuscomm.com/">Home</a>
-                  <img class="navbar-brand" style="width: 50px; height: 50px;" v-bind:src=profilePicture>
+                  <a class="navbar-brand" href="#">Quick Bots</a>
+                  <img v-if='loggedIn' class="navbar-brand" style="width: 50px; height: 50px;" v-bind:src=profilePicture>
                   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                   </button>
                   <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
                     <ul class="navbar-nav">
                       <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false"></a>
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        </a>
                         <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                        <li><a class="dropdown-item" href="https://gpuforpeople.asuscomm.com/#about">About</a></li>
-                        <li><a class="dropdown-item" href="https://gpuforpeople.asuscomm.com/setup">Bot Setup</a></li>
-                        <li><a class="dropdown-item" href="https://gpuforpeople.asuscomm.com/guide">Quick Guide</a></li>
-                        <li><a class="dropdown-item" href="https://gpuforpeople.asuscomm.com/profile">Profile</a></li>
+                          <li><a class="dropdown-item" href="https://gpuforpeople.asuscomm.com/#about">About</a></li>
+                          <li v-if='loggedIn != true'><a class="dropdown-item" href="https://gpuforpeople.asuscomm.com/login">Login/Sign Up</a></li>
+                          <li><a class="dropdown-item" href="https://gpuforpeople.asuscomm.com/">Pricing</a></li>
+                          <li v-if='loggedIn'><a class="dropdown-item" href="https://gpuforpeople.asuscomm.com/profile">Profile</a></li>
+                          <li v-if='loggedIn'><a class="dropdown-item" href="https://gpuforpeople.asuscomm.com/setup">Bot Setup</a></li>
+                          <li v-if='loggedIn'><a class="dropdown-item" href="https://gpuforpeople.asuscomm.com/guide">Quick Guide</a></li>
+                          <li><a class="dropdown-item" href="https://gpuforpeople.asuscomm.com/news">News</a></li>
+                          <li v-if='loggedIn'><a class="dropdown-item" href="https://gpuforpeople.asuscomm.com/settings">Settings</a></li>
                         </ul>
                       </li>
                     </ul>

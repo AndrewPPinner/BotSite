@@ -4,6 +4,7 @@ const app = Vue.createApp({
             user: null,
             pass: null,
             url: null,
+            profilePicture: ''
         }
     },
     methods: {
@@ -26,6 +27,15 @@ const app = Vue.createApp({
             })
             .catch(e =>(console.log(e)))
         }
+    },
+    mounted() {
+        axios({method: 'get',
+        url: 'https://gpuforpeople.asuscomm.com/profile/info'  
+    })
+        .then(response => {
+            this.profilePicture = "https://avatars.dicebear.com/api/bottts/" + response.data.nickname + ".svg"
+        })
+        .catch(e => (console.log(e)))
     }
 })
 
