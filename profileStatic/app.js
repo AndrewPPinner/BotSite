@@ -8,8 +8,7 @@ const app = Vue.createApp({
     methods: {
     },
     mounted() {
-        axios
-        .get({method: 'get',
+        axios({method: 'get',
         url: 'https://gpuforpeople.asuscomm.com/profile/info'  
     })
         .then(response => {
