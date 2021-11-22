@@ -24,8 +24,8 @@ const authToken = jwt({
 });
 
 // static welcome page no sign up required
-app.use('/', express.static('welcome'))
-app.use('/news', express.static('news'))
+app.use('/', express.static('welcome/'))
+app.use('/news', express.static('news/'))
 
 
 ;(async () => {
@@ -47,10 +47,10 @@ app.use('/news', express.static('news'))
 
 
       //static sites that require the user to be logged in
-    app.use('/guide' , requiresAuth(), express.static('guide'))
-    app.use('/settings', requiresAuth(), express.static('settings'))
-    app.use('/setup', requiresAuth(), express.static('botStatic'))
-    app.use('/profile', requiresAuth(), express.static('profileStatic'))
+    app.use('/guide' , requiresAuth(), express.static('guide/'))
+    app.use('/settings', requiresAuth(), express.static('settings/'))
+    app.use('/setup', requiresAuth(), express.static('botStatic/'))
+    app.use('/profile', requiresAuth(), express.static('profileStatic/'))
 
     //check if the user is logged in to display useable endpoints
     app.get('/loggedin', (req, res) => {
