@@ -10,12 +10,12 @@ const app = Vue.createApp({
     },
     mounted() {
         axios
-        .get("https://gpuforpeople.asuscomm.com/loggedin")
+        .get("https://gpubots.asuscomm.com/loggedin")
         .then(res => (console.log(res), this.loggedIn = true))
         .catch(e => (this.loggedIn = false))
         
         axios({method: 'get',
-        url: 'https://gpuforpeople.asuscomm.com/profile/info'  
+        url: 'https://gpubots.asuscomm.com/profile/info'  
     })
         .then(response => {
             this.profilePicture = "https://avatars.dicebear.com/api/bottts/" + response.data.nickname + ".svg"
