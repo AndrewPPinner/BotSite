@@ -87,7 +87,7 @@ app.use('/news', express.static('news'))
             const browser = await puppeteer.launch({args: ['--no-sandbox', "--disable-setuid-sandbox"], headless: false})
             const page = await browser.newPage()
             const complete = ''
-            await page.setUserAgent(userAgent.toString())
+            //await page.setUserAgent(userAgent.toString())
             
             //the Url of the card you want the bot to buy
             await page.goto(url, {timeout: 20000, waitUntil: 'domcontentloaded'})
