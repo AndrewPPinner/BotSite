@@ -1,4 +1,5 @@
 const puppeteer = require('puppeteer')
+const cheerio = require('cheerio')
 const axios = require('axios')
 const fs = require('fs-extra')
 const express = require('express')
@@ -12,6 +13,7 @@ const jwt = require('express-jwt');
 const jwks = require('jwks-rsa');
 const jwtAuthz = require('express-jwt-authz')
 const JwksRsa = require('jwks-rsa')
+const { response } = require('express')
 const checkUseBot = jwtAuthz(['Use:bot'], {customScopeKey:'permissions'})
 const authToken = jwt({
     secret: JwksRsa.expressJwtSecret({
@@ -46,32 +48,19 @@ app.use('/news', express.static('news'))
           clientSecret: "Ttr9gZjdkLOp8vNwDzikbdjVwpBnPvQKjq7YX_rnVMzPPl5XX4RzoJNhlQ-9ZhzQ"
         })
       );
+      const data = []
 
-const data = []
-            setInterval(async function(){
-            const getStock = 'https://www.bestbuy.com/site/searchpage.jsp?id=pcat17071&qp=category_facet%3Dname~abcat0507002%5Egpusv_facet%3DGraphics%20Processing%20Unit%20(GPU)~NVIDIA%20GeForce%20RTX%203060%5Egpusv_facet%3DGraphics%20Processing%20Unit%20(GPU)~NVIDIA%20GeForce%20RTX%203060%20Ti%5Egpusv_facet%3DGraphics%20Processing%20Unit%20(GPU)~NVIDIA%20GeForce%20RTX%203070%5Egpusv_facet%3DGraphics%20Processing%20Unit%20(GPU)~NVIDIA%20GeForce%20RTX%203070%20Ti%5Egpusv_facet%3DGraphics%20Processing%20Unit%20(GPU)~NVIDIA%20GeForce%20RTX%203080%5Egpusv_facet%3DGraphics%20Processing%20Unit%20(GPU)~NVIDIA%20GeForce%20RTX%203080%20Ti%5Egpusv_facet%3DGraphics%20Processing%20Unit%20(GPU)~NVIDIA%20GeForce%20RTX%203090&st=nvidia+graphics'
-            const browser = await puppeteer.launch({args: ['--no-sandbox', "--disable-setuid-sandbox"], headless: false})
-            const page = await browser.newPage()
-            await page.goto(getStock, {timeout: 60000, waitUntil: 'domcontentloaded'})
-            await page.waitForSelector(".sku-item-list")
-
-            var available = await page.$$eval("button[data-sku-id]",
-            elements=> elements.map(item=>item.innerText))
-
-            var card = await page.$$eval(".sku-header a",
-            elements=> elements.map(item=>item.innerText))
-
-            var price = await page.$$eval(".pricing-price span[aria-hidden]",
-            elements=> elements.map(item=>item.innerText))
-            await browser.close()
-            data.push({
-            card,
-            price,
-            available
+      setInterval(function () {
+        axios
+        .get('https://www.bestbuy.com/site/searchpage.jsp?id=pcat17071&qp=category_facet%3Dname~abcat0507002%5Egpusv_facet%3DGraphics%20Processing%20Unit%20(GPU)~NVIDIA%20GeForce%20RTX%203060%5Egpusv_facet%3DGraphics%20Processing%20Unit%20(GPU)~NVIDIA%20GeForce%20RTX%203060%20Ti%5Egpusv_facet%3DGraphics%20Processing%20Unit%20(GPU)~NVIDIA%20GeForce%20RTX%203070%5Egpusv_facet%3DGraphics%20Processing%20Unit%20(GPU)~NVIDIA%20GeForce%20RTX%203070%20Ti%5Egpusv_facet%3DGraphics%20Processing%20Unit%20(GPU)~NVIDIA%20GeForce%20RTX%203080%5Egpusv_facet%3DGraphics%20Processing%20Unit%20(GPU)~NVIDIA%20GeForce%20RTX%203080%20Ti%5Egpusv_facet%3DGraphics%20Processing%20Unit%20(GPU)~NVIDIA%20GeForce%20RTX%203090&st=nvidia+graphics')
+        .then(response => {
+            const base = response.data
+            const scrape = cheerio.load(base)
+            scrape(".sku-item-list", base).each(function() {
+                const card = scrape(this).find('.sku-header').find('a').text()
+                data.push({card})
             })
-                
-
-
+        })
       },60000)
 
 
@@ -108,12 +97,8 @@ const data = []
     })
 
     app.get('/stock', authToken, async (req, res) => {
-        var response = ''
-        axios
-        .get('https://www.bestbuy.com/site/searchpage.jsp?id=pcat17071&qp=category_facet%3Dname~abcat0507002%5Egpusv_facet%3DGraphics%20Processing%20Unit%20(GPU)~NVIDIA%20GeForce%20RTX%203060%5Egpusv_facet%3DGraphics%20Processing%20Unit%20(GPU)~NVIDIA%20GeForce%20RTX%203060%20Ti%5Egpusv_facet%3DGraphics%20Processing%20Unit%20(GPU)~NVIDIA%20GeForce%20RTX%203070%5Egpusv_facet%3DGraphics%20Processing%20Unit%20(GPU)~NVIDIA%20GeForce%20RTX%203070%20Ti%5Egpusv_facet%3DGraphics%20Processing%20Unit%20(GPU)~NVIDIA%20GeForce%20RTX%203080%5Egpusv_facet%3DGraphics%20Processing%20Unit%20(GPU)~NVIDIA%20GeForce%20RTX%203080%20Ti%5Egpusv_facet%3DGraphics%20Processing%20Unit%20(GPU)~NVIDIA%20GeForce%20RTX%203090&st=nvidia+graphics')
-        .then(res => (console.log(res), this.response = res))
-        res.send(response)
-        
+        res.send(data)
+
     })
 
     app.listen(port, () => {
