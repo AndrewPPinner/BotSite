@@ -5,6 +5,7 @@ const app = express()
 const port = process.env.PORT || 3000
 const userAgent = require('user-agents')
 require('dotenv').config()
+const hour = 60 * 60 * 1000
 const { auth, requiresAuth, claimEquals } = require('express-openid-connect');
 const jwt = require('express-jwt');
 const jwks = require('jwks-rsa');
@@ -46,6 +47,19 @@ app.use('/news', express.static('news'))
       );
 
 
+            setInterval(async function(){
+            const browser = await puppeteer.launch({args: ['--no-sandbox', "--disable-setuid-sandbox"], headless: false})
+            const page = await browser.newPage()
+            await page.goto(getStock, {timeout: 60000, waitUntil: 'domcontentloaded'})
+            await page.waitForSelector(".sku-item-list")
+            var stockRes = await page.$$eval(".sku-list-item-button",
+                elements=> elements.map(item=>item.textContent))
+    
+                return stockRes
+
+      },hour)
+
+
       //static sites that require the user to be logged in
     app.use('/guide' , requiresAuth(), express.static('guide'))
     app.use('/settings', requiresAuth(), express.static('settings'))
@@ -80,7 +94,6 @@ app.use('/news', express.static('news'))
 
     app.get('/stock', authToken, async (req, res) => {
         const getStock = 'https://www.bestbuy.com/site/searchpage.jsp?id=pcat17071&qp=category_facet%3Dname~abcat0507002%5Egpusv_facet%3DGraphics%20Processing%20Unit%20(GPU)~NVIDIA%20GeForce%20RTX%203060%5Egpusv_facet%3DGraphics%20Processing%20Unit%20(GPU)~NVIDIA%20GeForce%20RTX%203060%20Ti%5Egpusv_facet%3DGraphics%20Processing%20Unit%20(GPU)~NVIDIA%20GeForce%20RTX%203070%5Egpusv_facet%3DGraphics%20Processing%20Unit%20(GPU)~NVIDIA%20GeForce%20RTX%203070%20Ti%5Egpusv_facet%3DGraphics%20Processing%20Unit%20(GPU)~NVIDIA%20GeForce%20RTX%203080%5Egpusv_facet%3DGraphics%20Processing%20Unit%20(GPU)~NVIDIA%20GeForce%20RTX%203080%20Ti%5Egpusv_facet%3DGraphics%20Processing%20Unit%20(GPU)~NVIDIA%20GeForce%20RTX%203090&st=nvidia+graphics'
-        const stockBot = await stockCheck (getStock)
         res.send(stockRes)
 
     })
@@ -155,17 +168,6 @@ app.use('/news', express.static('news'))
         
         
     
-    }
-
-    const stockCheck = async (getStock) => {
-        const browser = await puppeteer.launch({args: ['--no-sandbox', "--disable-setuid-sandbox"], headless: false})
-        const page = await browser.newPage()
-        await page.goto(getStock, {timeout: 60000, waitUntil: 'domcontentloaded'})
-        await page.waitForSelector(".sku-item-list")
-        var stockRes = await page.$$eval(".sku-list-item-button",
-            elements=> elements.map(item=>item.textContent))
-
-            return stockRes
     }
 
 
