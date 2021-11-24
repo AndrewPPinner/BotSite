@@ -48,6 +48,7 @@ app.use('/news', express.static('news'))
           clientSecret: "Ttr9gZjdkLOp8vNwDzikbdjVwpBnPvQKjq7YX_rnVMzPPl5XX4RzoJNhlQ-9ZhzQ"
         })
       );
+
       const data = []
 
       setInterval(function () {
@@ -69,7 +70,7 @@ app.use('/news', express.static('news'))
             })
             console.log('ready')
         })
-      },30000)
+      },hour)
 
 
       //static sites that require the user to be logged in
@@ -93,7 +94,8 @@ app.use('/news', express.static('news'))
         res.send(req.oidc.idTokenClaims)        
     })
 
- 
+    
+    const result = []
     //calling puppeteer logic function passing information through the heading
     app.get('/bot/user/:userID/:userPass/*', authToken, checkUseBot, async (request, response) => {
         const username = request.params.userID
@@ -101,7 +103,7 @@ app.use('/news', express.static('news'))
         const url = request.params[0]
         console.log(url + " " + username + " " + pass)
         const content = await bot (username, pass, url)
-        response.send(content)
+        response.send(result)
     })
 
     app.get('/stock', authToken, async (req, res) => {
@@ -115,9 +117,9 @@ app.use('/news', express.static('news'))
 
     // puppeteer bot logic
     const bot = async (username, pass, url) => {
+        result.splice(0,result.length)
             const browser = await puppeteer.launch({args: ['--no-sandbox', "--disable-setuid-sandbox"], headless: false})
             const page = await browser.newPage()
-            const complete = ''
             //await page.setUserAgent(userAgent.toString())
             
             //the Url of the card you want the bot to buy
@@ -138,6 +140,7 @@ app.use('/news', express.static('news'))
                     await page.click('.cia-form__controls ')
                     await page.waitForSelector('button[data-track="Place your Order - Contact Card"]')
                     await page.screenshot({path: 'example.png'})
+                    await result.push({order : 'complete'})
                 }
                 catch(e) {
                     try {
@@ -156,11 +159,13 @@ app.use('/news', express.static('news'))
                                 await page.click('.cia-form__controls ')
                                 await page.waitForSelector('button[data-track="Place your Order - Contact Card"]')
                                 await page.screenshot({path: 'example.png'})
+                                await result.push({order : 'complete'})
                             }
                           },7500)
 
                     }
                 catch(e) {
+                    await result.push({order : 'failed'})
                     console.log(e)
                     await browser.close()
                     await bot (username, pass, url)
@@ -168,6 +173,7 @@ app.use('/news', express.static('news'))
             }
                 //await page.click('.payment__order-summary')
             } catch(e) {
+            await result.push({order : 'failed'})
             await page.screenshot({path: 'example.png'})
             console.log("there was an error")
             console.log(e)
@@ -175,7 +181,6 @@ app.use('/news', express.static('news'))
             await bot (username, pass, url)
         }
         
-        return('good job')
         
         
     
