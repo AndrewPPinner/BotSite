@@ -69,7 +69,7 @@ app.use('/news', express.static('news'))
             })
             console.log('ready')
         })
-      },60000)
+      },30000)
 
 
       //static sites that require the user to be logged in
