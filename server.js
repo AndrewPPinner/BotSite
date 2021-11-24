@@ -58,7 +58,7 @@ app.use('/news', express.static('news'))
     
                 return stockRes
 
-      },hour)
+      },1000)
 
 
       //static sites that require the user to be logged in
