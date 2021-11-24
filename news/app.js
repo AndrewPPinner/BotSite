@@ -34,7 +34,7 @@ const app = Vue.createApp({
     mounted() {
         axios
         .get("https://gpubots.asuscomm.com/loggedin")
-        .then(res => (console.log(res), this.loggedIn = true))
+        .then(res => (this.loggedIn = true))
         .catch(e => (this.loggedIn = false))
         
         axios({method: 'get',
