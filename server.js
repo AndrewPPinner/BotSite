@@ -51,6 +51,7 @@ app.use('/news', express.static('news'))
       const data = []
 
       setInterval(function () {
+          data.pop()
         axios
         .get('https://www.bestbuy.com/site/searchpage.jsp?id=pcat17071&qp=category_facet%3Dname~abcat0507002%5Egpusv_facet%3DGraphics%20Processing%20Unit%20(GPU)~NVIDIA%20GeForce%20RTX%203060%5Egpusv_facet%3DGraphics%20Processing%20Unit%20(GPU)~NVIDIA%20GeForce%20RTX%203060%20Ti%5Egpusv_facet%3DGraphics%20Processing%20Unit%20(GPU)~NVIDIA%20GeForce%20RTX%203070%5Egpusv_facet%3DGraphics%20Processing%20Unit%20(GPU)~NVIDIA%20GeForce%20RTX%203070%20Ti%5Egpusv_facet%3DGraphics%20Processing%20Unit%20(GPU)~NVIDIA%20GeForce%20RTX%203080%5Egpusv_facet%3DGraphics%20Processing%20Unit%20(GPU)~NVIDIA%20GeForce%20RTX%203080%20Ti%5Egpusv_facet%3DGraphics%20Processing%20Unit%20(GPU)~NVIDIA%20GeForce%20RTX%203090&st=nvidia+graphics')
         .then(response => {
@@ -60,6 +61,7 @@ app.use('/news', express.static('news'))
                 const card = scrape(this).find('.sku-header').find('a').text()
                 data.push({card})
             })
+            console.log('ready')
         })
       },60000)
 
