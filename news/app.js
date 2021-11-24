@@ -4,7 +4,9 @@ const app = Vue.createApp({
             loggedIn: false,
             profilePicture: '',
             number: '',
-            response: {}
+            available: {},
+            card: {},
+            price: {}
         }
     },
     methods: {
@@ -24,7 +26,7 @@ const app = Vue.createApp({
             axios({method: 'get',
             url: 'https://gpubots.asuscomm.com/stock',
             headers: { "authorization": "Bearer " + token}})
-            .then(res => (console.log(res), this.response = res))
+            .then(res => (console.log(res.data.available), this.available = res.data.available, this.price = res.data.price, this.card = res.data.card))
             .catch(e => (console.log(e)))
         },
 
