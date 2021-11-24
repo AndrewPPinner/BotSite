@@ -3,7 +3,8 @@ const app = Vue.createApp({
         return {
             loggedIn: false,
             profilePicture: '',
-            number: ''
+            number: '',
+            stock: ''
         }
     },
     methods: {
