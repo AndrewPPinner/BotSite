@@ -4,10 +4,13 @@ const app = Vue.createApp({
             loggedIn: false,
             profilePicture: '',
             number: '',
-            stock: ''
+            available: {},
+            card: {},
+            price: {}
         }
     },
     methods: {
+        //get token for authorization to use endpoint
         getToken(token) {
             axios
             .get("https://gpubots.asuscomm.com/profile/ID")
@@ -17,13 +20,16 @@ const app = Vue.createApp({
             })
             .catch(e =>(console.log(e)))
         },
+
+//get stock information from server
         getStock(token) {
             axios({method: 'get',
             url: 'https://gpubots.asuscomm.com/stock',
             headers: { "authorization": "Bearer " + token}})
-            .then(res => (console.log(res)))
+            .then(res => (this.available = res.data.available, this.card = res.data.card, this.price = res.data.price))
             .catch(e => (console.log(e)))
         },
+
         updates(number) {
             axios
             .post()
@@ -31,18 +37,20 @@ const app = Vue.createApp({
             .catch()
         }
     },
+
     mounted() {
+        //check if logged in
         axios
         .get("https://gpubots.asuscomm.com/loggedin")
         .then(res => (this.loggedIn = true))
         .catch(e => (this.loggedIn = false))
-        
-        axios({method: 'get',
-        url: 'https://gpubots.asuscomm.com/profile/info'  
-    })
+
+        //get profile picture
+        axios
+        ({method: 'get',
+        url: 'https://gpubots.asuscomm.com/profile/info'})
         .then(response => {
-            this.profilePicture = "https://avatars.dicebear.com/api/bottts/" + response.data.nickname + ".svg"
-        })
+        this.profilePicture = "https://avatars.dicebear.com/api/bottts/" + response.data.nickname + ".svg"})
         .catch(e => (console.log(e)))
     }
     

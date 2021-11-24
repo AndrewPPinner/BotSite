@@ -60,7 +60,7 @@ const stockRes = []
             var card = await page.$$eval(".sku-header a",
             elements=> elements.map(item=>item.innerText))
 
-            var price = await page.$$eval(".pricing-price span",
+            var price = await page.$$eval(".pricing-price span[aria-hidden]",
             elements=> elements.map(item=>item.innerText))
             await browser.close()
             stockRes.push({
