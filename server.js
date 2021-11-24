@@ -53,10 +53,21 @@ const stockRes = []
             const page = await browser.newPage()
             await page.goto(getStock, {timeout: 60000, waitUntil: 'domcontentloaded'})
             await page.waitForSelector(".sku-item-list")
-            var data = await page.$$eval("button[data-sku-id]",
+
+            var available = await page.$$eval("button[data-sku-id]",
+            elements=> elements.map(item=>item.innerText))
+
+            var card = await page.$$eval(".sku-header a",
+            elements=> elements.map(item=>item.innerText))
+
+            var price = await page.$$eval(".pricing-price span",
             elements=> elements.map(item=>item.innerText))
             await browser.close()
-            stockRes.push({data})
+            stockRes.push({
+            card,
+            price,
+            available
+            })
                 
 
 
