@@ -59,7 +59,11 @@ app.use('/news', express.static('news'))
             const scrape = cheerio.load(base)
             scrape(".sku-item-list", base).each(function() {
                 const card = scrape(this).find('.sku-header').find('a').text()
-                data.push({card})
+                const price = scrape(this).find('.pricing-price').find('span').attr("aria-hidden").text()
+                data.push({
+                    card,
+                    price
+                })
             })
             console.log('ready')
         })
