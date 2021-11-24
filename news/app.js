@@ -4,7 +4,7 @@ const app = Vue.createApp({
             loggedIn: false,
             profilePicture: '',
             number: '',
-            response: [{}]
+            response: {}
         }
     },
     methods: {
