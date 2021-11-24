@@ -7,11 +7,21 @@ const app = Vue.createApp({
         }
     },
     methods: {
-        getStock() {
+        getToken(token) {
             axios
-            .get("https://gpubots.asuscomm.com/stock")
+            .get("https://gpubots.asuscomm.com/profile/ID")
+            .then(response => {
+                const token = response.data
+                this.getStock(token)
+            })
+            .catch(e =>(console.log(e)))
+        },
+        getStock(token) {
+            axios({method: 'get',
+            url: 'https://gpubots.asuscomm.com/stock',
+            headers: { "authorization": "Bearer " + token}})
             .then(res => (console.log(res)))
-            .catch()
+            .catch(e => (console.log(e)))
         },
         updates(number) {
             axios
