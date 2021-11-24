@@ -47,8 +47,18 @@
                   <button @click='updates(number)'>Join</button>
                 </form>
               </div>
+              <!-- <div v-for='item in resData'  v-show='show' class="card text-white bg-secondary mb-3" style="width: 18rem; display: inline-block;">
+                <img v-bind:src='item.img' class="card-img-top" v-bind:alt="item.name">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ item.name }}</h5>
+                        
+
+                        <p  :style="[item.available ? {'background-color':'green'} : {'background-color': 'red'}]" class="card-text">{{ item.price }}<br> {{ item.stock }}</p>
+                        <a  target="_blank" v-bind:href="item.link" class="btn btn-primary">Link To Page</a>
+                    </div>
+                </div> -->
               <div>
-                <li v-for='res in response.card'>{{ res }}</li><li v-for='res in response.available'>{{ res }}</li> <li v-for='res in response.price'>{{ res }}</li>
+                <li v-for='res in response'>{{ res.card }} {{ res.available }} {{ res.price }}</li>
               </div>
         </div>
         

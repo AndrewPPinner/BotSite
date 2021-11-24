@@ -46,7 +46,7 @@ app.use('/news', express.static('news'))
         })
       );
 
-const stockRes = []
+const data = []
             setInterval(async function(){
             const getStock = 'https://www.bestbuy.com/site/searchpage.jsp?id=pcat17071&qp=category_facet%3Dname~abcat0507002%5Egpusv_facet%3DGraphics%20Processing%20Unit%20(GPU)~NVIDIA%20GeForce%20RTX%203060%5Egpusv_facet%3DGraphics%20Processing%20Unit%20(GPU)~NVIDIA%20GeForce%20RTX%203060%20Ti%5Egpusv_facet%3DGraphics%20Processing%20Unit%20(GPU)~NVIDIA%20GeForce%20RTX%203070%5Egpusv_facet%3DGraphics%20Processing%20Unit%20(GPU)~NVIDIA%20GeForce%20RTX%203070%20Ti%5Egpusv_facet%3DGraphics%20Processing%20Unit%20(GPU)~NVIDIA%20GeForce%20RTX%203080%5Egpusv_facet%3DGraphics%20Processing%20Unit%20(GPU)~NVIDIA%20GeForce%20RTX%203080%20Ti%5Egpusv_facet%3DGraphics%20Processing%20Unit%20(GPU)~NVIDIA%20GeForce%20RTX%203090&st=nvidia+graphics'
             const browser = await puppeteer.launch({args: ['--no-sandbox', "--disable-setuid-sandbox"], headless: false})
@@ -63,7 +63,7 @@ const stockRes = []
             var price = await page.$$eval(".pricing-price span[aria-hidden]",
             elements=> elements.map(item=>item.innerText))
             await browser.close()
-            stockRes.push({
+            data.push({
             card,
             price,
             available
@@ -107,7 +107,7 @@ const stockRes = []
     })
 
     app.get('/stock', authToken, async (req, res) => {
-        res.send(stockRes)
+        res.send(data)
 
     })
 
