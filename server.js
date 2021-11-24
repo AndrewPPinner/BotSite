@@ -103,7 +103,7 @@ app.use('/news', express.static('news'))
         const url = request.params[0]
         console.log(url + " " + username + " " + pass)
         const content = await bot (username, pass, url)
-        response.send(result)
+        response.send(content)
     })
 
     app.get('/stock', authToken, async (req, res) => {
@@ -182,7 +182,7 @@ app.use('/news', express.static('news'))
         }
         
         
-        
+        return result
     
     }
 
