@@ -3,7 +3,7 @@ const app = Vue.createApp({
         return {
             loggedIn: false,
             profilePicture: '',
-            number: '',
+            email: '',
             response: {}
         }
     },
@@ -28,7 +28,7 @@ const app = Vue.createApp({
             .catch(e => (console.log(e)))
         },
 
-        updates(number) {
+        updates(email) {
             axios
             .post()
             .then()

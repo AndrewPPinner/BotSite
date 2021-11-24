@@ -42,9 +42,9 @@
                 <button @click='getToken(token)'>Check Stock</button>
 
                 <form>
-                  <label for="number">Get updates to your phone on in stock items</label>
-                  <input v-model='number' id='number' type="tel" placeholder="Phone Number">
-                  <button @click='updates(number)'>Join</button>
+                  <label for="number">Get updates to your email on in stock items</label>
+                  <input v-model='email' id='email' type="email" placeholder="Email">
+                  <button @click='updates(email)'>Join</button>
                 </form>
               </div>
               <div v-for='res in response' class="card text-white bg-secondary mb-3" style="width: 18rem; display: inline-block;">

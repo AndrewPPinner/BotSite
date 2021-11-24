@@ -141,6 +141,9 @@ app.use('/news', express.static('news'))
                     await page.waitForSelector('button[data-track="Place your Order - Contact Card"]')
                     await page.screenshot({path: 'example.png'})
                     await result.push({order : 'complete'})
+                    await page.waitForTimeout(10000)
+                    await browser.close()
+
                 }
                 catch(e) {
                     try {
@@ -160,6 +163,8 @@ app.use('/news', express.static('news'))
                                 await page.waitForSelector('button[data-track="Place your Order - Contact Card"]')
                                 await page.screenshot({path: 'example.png'})
                                 await result.push({order : 'complete'})
+                                await page.waitForTimeout(10000)
+                                await browser.close()
                             }
                           },7500)
 
@@ -182,7 +187,6 @@ app.use('/news', express.static('news'))
         }
         
         
-        return result
     
     }
 
