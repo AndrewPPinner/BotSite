@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="">
-        <title>Settings</title>
+        <title>News</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
@@ -38,6 +38,15 @@
                   </div>
                 </div>
               </nav>
+              <div>
+                <button @click='getStock()'>Check Stock</button>
+
+                <form>
+                  <label for="number">Get updates to your phone on in stock items</label>
+                  <input v-model='number' id='number' type="tel" placeholder="Phone Number">
+                  <button @click='updates(number)'>Join</button>
+                </form>
+              </div>
         </div>
         
         <script src="app.js" async defer></script>
