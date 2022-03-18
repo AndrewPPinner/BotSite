@@ -28,8 +28,8 @@ const authToken = jwt({
 });
 
 // static welcome page no sign up required
-app.use('/', express.static('welcome'))
-app.use('/news', express.static('news'))
+app.use('/botsite', express.static('welcome'))
+app.use('/botsite/news', express.static('news'))
 
 
 ;(async () => {
@@ -74,30 +74,30 @@ app.use('/news', express.static('news'))
 
 
       //static sites that require the user to be logged in
-    app.use('/guide' , requiresAuth(), express.static('guide'))
-    app.use('/settings', requiresAuth(), express.static('settings'))
-    app.use('/setup', requiresAuth(), express.static('botStatic'))
-    app.use('/profile', requiresAuth(), express.static('profileStatic'))
+    app.use('/botsite/guide' , requiresAuth(), express.static('guide'))
+    app.use('/botsite/settings', requiresAuth(), express.static('settings'))
+    app.use('/botsite/setup', requiresAuth(), express.static('botStatic'))
+    app.use('/botsite/profile', requiresAuth(), express.static('profileStatic'))
 
     //check if the user is logged in to display useable endpoints
-    app.get('/loggedin', (req, res) => {
+    app.get('/botsite/loggedin', (req, res) => {
         res.send('Logged in')})
 
     // get access token on login to make request to autherized endpoints
-    app.get('/profile/ID', requiresAuth(), (req, res) => {
+    app.get('/botsite/profile/ID', requiresAuth(), (req, res) => {
         let { access_token } = req.oidc.accessToken;
         res.send(access_token)
     })
 
     //testing and should remove in the future
-    app.get('/profile/info', requiresAuth(), (req, res) => {
+    app.get('/botsite/profile/info', requiresAuth(), (req, res) => {
         res.send(req.oidc.idTokenClaims)        
     })
 
     
     const result = []
     //calling puppeteer logic function passing information through the heading
-    app.get('/bot/user/:userID/:userPass/*', authToken, checkUseBot, async (request, response) => {
+    app.get('/botsite/bot/user/:userID/:userPass/*', authToken, checkUseBot, async (request, response) => {
         const username = request.params.userID
         const pass = request.params.userPass
         const url = request.params[0]
@@ -106,7 +106,7 @@ app.use('/news', express.static('news'))
         response.send(content)
     })
 
-    app.get('/stock', authToken, async (req, res) => {
+    app.get('/botsite/stock', authToken, async (req, res) => {
         res.send(data)
 
     })
