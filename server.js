@@ -42,7 +42,7 @@ app.use('/news', express.static('news'))
             },
           auth0Logout: true,
           issuerBaseURL: "https://dev-2zwfghb6.us.auth0.com/",
-          baseURL: "https://gpubots.asuscomm.com/",
+          baseURL: "https://andrew-pinner.asuscomm.com/botsite",
           clientID: "j80RvDBseJ3tlus9UR1B21EjYn6KnV9y",
           secret: "feiTKHNEuXKjzvObtGOyccAICZOZKBHh",
           clientSecret: "Ttr9gZjdkLOp8vNwDzikbdjVwpBnPvQKjq7YX_rnVMzPPl5XX4RzoJNhlQ-9ZhzQ"
@@ -112,7 +112,7 @@ app.use('/news', express.static('news'))
     })
 
     app.listen(port, () => {
-        console.log(`Server listening on https://gpubots.asuscomm.com/`)
+        console.log('server started')
     })
 
     // puppeteer bot logic

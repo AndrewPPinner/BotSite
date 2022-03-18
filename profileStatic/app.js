@@ -9,7 +9,7 @@ const app = Vue.createApp({
     },
     mounted() {
         axios({method: 'get',
-        url: 'https://gpubots.asuscomm.com/profile/info'  
+        url: 'https://andrew-pinner.asuscomm.com/botsite/profile/info'  
     })
         .then(response => {
             this.username = response.data.nickname

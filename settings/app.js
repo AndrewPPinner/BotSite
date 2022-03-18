@@ -8,7 +8,7 @@ const app = Vue.createApp({
     },
     mounted() {
         axios({method: 'get',
-        url: 'https://gpubots.asuscomm.com/profile/info'  
+        url: 'https://andrew-pinner.asuscomm.com/botsite/profile/info'  
     })
         .then(response => {
             this.profilePicture = "https://avatars.dicebear.com/api/bottts/" + response.data.nickname + ".svg"
