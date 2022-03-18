@@ -28,7 +28,7 @@ const authToken = jwt({
 });
 
 // static welcome page no sign up required
-app.use('/botsite', express.static('welcome'))
+app.use('/botsite/', express.static('welcome'))
 app.use('/botsite/news', express.static('news'))
 
 
