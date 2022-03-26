@@ -15,39 +15,16 @@ const jwtAuthz = require('express-jwt-authz')
 const JwksRsa = require('jwks-rsa')
 const { response } = require('express')
 const checkUseBot = jwtAuthz(['Use:bot'], {customScopeKey:'permissions'})
-const authToken = jwt({
-    secret: JwksRsa.expressJwtSecret({
-        cache: true,
-        rateLimit: true,
-        jwksRequestsPerMinute: 5,
-        jwksUri: "https://dev-2zwfghb6.us.auth0.com/.well-known/jwks.json",
-    }),
-    audience: "https://test/api",
-    issuer: "https://dev-2zwfghb6.us.auth0.com/",
-    algorithms: ['RS256']
-});
+
+
+// hidden information authToken
 
 // static welcome page no sign up required
 app.use('/', express.static('welcome'))
 app.use('/botsite/news', express.static('news'))
 
 
-;(async () => {
-    app.use(
-        auth({
-          authorizationParams: {
-              response_type: 'code',
-              audience: "https://test/api",
-              scope: 'openid profile email',
-            },
-          auth0Logout: true,
-          issuerBaseURL: "https://dev-2zwfghb6.us.auth0.com/",
-          baseURL: "https://andrew-pinner.asuscomm.com",
-          clientID: "j80RvDBseJ3tlus9UR1B21EjYn6KnV9y",
-          secret: "feiTKHNEuXKjzvObtGOyccAICZOZKBHh",
-          clientSecret: "Ttr9gZjdkLOp8vNwDzikbdjVwpBnPvQKjq7YX_rnVMzPPl5XX4RzoJNhlQ-9ZhzQ"
-        })
-      );
+//hidden information ;(async
 
       const data = []
 
